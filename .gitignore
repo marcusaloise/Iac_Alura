@@ -14,3 +14,5 @@ crash.*.log
 *.pem*
 
 *.hcl*
+
+*.Ds_Store*
