@@ -22,12 +22,13 @@ resource "aws_instance" "app_server" {
     instance_type = "t2.micro"
 
     key_name = "id_rsa"
-    # user_data = <<-EOF
-    #                 #!/bin/bash
-    #                 cd /home/ubuntu
-    #                 echo "<h1>Feito com Terraform</h1>" > index.html
-    #                 nohup busybox httpd -f -p 8080 &    
-    #                 EOF
+    user_data = <<-EOF
+                    #!/bin/bash
+                    cd /home/ubuntu
+                    git clone https://github.com/marcusaloise/WebPage.git
+                    cd WebPage
+                    nohup busybox httpd -f -p 8080 &    
+                    EOF
 
     tags = {
       Name = "AluraEstudos"
