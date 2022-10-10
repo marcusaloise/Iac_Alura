@@ -9,17 +9,19 @@ terraform {
     required_version = ">= 0.14.9"
 }
 
+// provedor
 provider "aws" {
     profile = "default"
     region = "us-east-1"
   
 }
 
+// recurso
 resource "aws_instance" "app_server" {
     ami = "ami-09d56f8956ab235b3"
     instance_type = "t2.micro"
 
-    key_name = "IacAlura"
+    key_name = "id_rsa"
     # user_data = <<-EOF
     #                 #!/bin/bash
     #                 cd /home/ubuntu
@@ -28,7 +30,7 @@ resource "aws_instance" "app_server" {
     #                 EOF
 
     tags = {
-      Name = "Teste aws"
+      Name = "AluraEstudos"
     }
 
 }
