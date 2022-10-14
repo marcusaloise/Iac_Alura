@@ -1,8 +1,42 @@
 - hosts: terraform-ansible
   tasks:
-    - name: criando o arquivo
-      copy:
-        dest: /home/ubuntu/index.html
-        content: <h1>Feito com terraform e ansible</h1>
+    - name: apt-get update
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: ficando no diretorio correto
+      shell: "cd /home/ubuntu"  
+
+    - name: clone a github repository
+      git:
+        repo: https://github.com/marcusaloise/WebPage.git
+        dest: /home/ubuntu/repo
+        clone: yes
+        update: yes
+
+
+    # - name: instalando o nginx
+    #   apt: 
+    #     name: nginx
+    #     state: latest
+    #   become: yes
+
+    # - name: Start service
+    #   service:
+    #     name: nginx
+    #     state: restarted
+    #     enable: yes
+    #   become: yes
+
+    # - name: Instalando python3, virtualenv
+    #   apt:
+    #     pkg:
+    #     - python3
+    #     - virtualenv
+    #   become: yes
+
+
+
     - name: criando o servidor
-      shell: "nohub busybox httdp -f -p 8080 &"
+      shell: "cd repo && nohup busybox httpd -f -p 8080 &"
