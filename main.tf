@@ -36,3 +36,7 @@ resource "aws_instance" "app_server" {
 
 }
 
+resource "aws_key_pair" "chaveSSH" {
+    key_name = TESTE # o nome da sua chave vai aqui
+    public_key = file("iac2.pub")
+}
