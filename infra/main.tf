@@ -12,16 +12,16 @@ terraform {
 // provedor
 provider "aws" {
     profile = "default"
-    region = "us-east-1"
+    region = var.region
   
 }
 
 // recurso
 resource "aws_instance" "app_server" {
-    ami = "ami-09d56f8956ab235b3"
-    instance_type = "t2.micro"
+    ami = "ami-09d3b3274b6c5d4aa"
+    instance_type = var.instancia
 
-    key_name = "id_rsa"
+    key_name = var.chave
     # user_data = <<-EOF
     #                 #!/bin/bash
     #                 cd /home/ubuntu
@@ -37,6 +37,6 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_key_pair" "chaveSSH" {
-    key_name = TESTE # o nome da sua chave vai aqui
-    public_key = file("iac2.pub")
+    key_name = var.chave # o nome da sua chave vai aqui
+    public_key = file("${var.chave}.pub")
 }
