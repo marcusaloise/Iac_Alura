@@ -18,7 +18,7 @@ provider "aws" {
 
 // recurso
 resource "aws_instance" "app_server" {
-    ami = "ami-09d3b3274b6c5d4aa"
+    ami = "ami-08c40ec9ead489470"
     instance_type = var.instancia
 
     key_name = var.chave
@@ -39,4 +39,8 @@ resource "aws_instance" "app_server" {
 resource "aws_key_pair" "chaveSSH" {
     key_name = var.chave # o nome da sua chave vai aqui
     public_key = file("${var.chave}.pub")
+}
+
+output "public_ip" {
+  value = aws_instance.app_server.public_ip
 }

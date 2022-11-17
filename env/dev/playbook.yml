@@ -1,5 +1,10 @@
-- hosts: terraform-ansible
+- hosts: terraform_ansible
   tasks:
+
+    # - name: idempotencia // verificando se o projeto já existe
+    #   stat:
+    #     path: /home/ubuntu/repo/WebPage.git
+    #   register: projeto
     - name: apt-get update
       apt:
         update_cache: yes
