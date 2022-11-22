@@ -1,24 +1,59 @@
 - hosts: terraform_ansible
   tasks:
 
+  - name: Instalando o Python3 e virtualenv
+    apt:
+      pkg:
+      - python3
+      - virtualenv
+      update_cache: yes
+    become: yes
+
+  - name: Git clone
+    ansible.builtin.git:
+      repo: https://github.com/guilhermeonrails/clientes-leo-api.git
+      dest: /home/ubuntu/tcc
+      version: master
+
+  
+  - name: Instalando dependendicias com o pip
+    pip:
+      virtualenv: /home/ubuntu/tcc/venv
+      name:
+        - django
+        - djangorestframework
+
+
+  - name: alterando o host
+    lineinfile: 
+      path: /home/ubuntu/tcc/setup/settings.py
+      regexp: 'ALLOWED_HOSTS'
+      line: 'ALLOWED_HOSTS = ["*"]'
+      backrefs: yes
+
+
+
+
+
+
     # - name: idempotencia // verificando se o projeto já existe
     #   stat:
     #     path: /home/ubuntu/repo/WebPage.git
     #   register: projeto
-    - name: apt-get update
-      apt:
-        update_cache: yes
-      become: yes
+    # - name: apt-get update
+    #   apt:
+    #     update_cache: yes
+    #   become: yes
 
-    - name: ficando no diretorio correto
-      shell: "cd /home/ubuntu"  
+    # - name: ficando no diretorio correto
+    #   shell: "cd /home/ubuntu"  
 
-    - name: clone a github repository
-      git:
-        repo: https://github.com/marcusaloise/WebPage.git
-        dest: /home/ubuntu/repo
-        clone: yes
-        update: yes
+    # - name: clone a github repository
+    #   git:
+    #     repo: https://github.com/marcusaloise/WebPage.git
+    #     dest: /home/ubuntu/repo
+    #     clone: yes
+    #     update: yes
 
 
     # - name: instalando o nginx
@@ -43,5 +78,5 @@
 
 
 
-    - name: criando o servidor
-      shell: "cd repo && nohup busybox httpd -f -p 8080 &"
+    # - name: criando o servidor
+    #   shell: "cd repo && nohup busybox httpd -f -p 8080 &"
